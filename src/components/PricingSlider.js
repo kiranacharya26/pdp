@@ -54,11 +54,12 @@ const PricingSlider = ({ minPrice, maxPrice, onPriceChange, isPaidSelected }) =>
                                 height: '20px',
                                 width: '20px',
                                 backgroundColor: '#548BF4',
+                                borderRadius: '50%',
                             }}
                         />
                     )}
                 />
-                <span className='text-xs sm:text-sm'>${values[1]}</span>
+                <span className='text-xs sm:text-sm ml-3'>${values[1]}</span>
             </div>
         </div>
     );

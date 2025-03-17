@@ -42,8 +42,8 @@ const Filter = ({ onFilterChange, onSortChange }) => {
         setSelectedOptions([]);
         setKeyword('');
         setMinPrice(0);
-        setMaxPrice(999);
-        onFilterChange([], '', 0, 999);
+        setMaxPrice(499);
+        onFilterChange([], '', 0, 499);
     };
 
     const isPaidSelected = selectedOptions.includes('paid');
@@ -51,32 +51,26 @@ const Filter = ({ onFilterChange, onSortChange }) => {
     return (
         <div>
             <KeywordSearch onKeywordChange={handleKeywordChange} />
-          <div className="flex items-center justify-between flex-wrap gap-4">
-    {/* Pricing Options & Slider Group */}
-    <div className="flex items-center gap-4 flex-wrap">
-        <h2 className="text-lg font-bold whitespace-nowrap">Pricing Options</h2>
-        <div className="flex gap-4 flex-wrap text-xs sm:text-sm">
-            {pricingOptions.map((option) => (
-                <PricingOption
-                    key={option.id}
-                    option={option}
-                    isSelected={selectedOptions.includes(option.id)}
-                    onChange={handleOptionChange}
-                />
-            ))}
-        </div>
-        {/* Pricing Slider with Controlled Width */}
-        <div className="w-80 sm:w-40 md:w-64 lg:w-72"> 
-            <PricingSlider  minPrice={minPrice}
-                maxPrice={maxPrice} onPriceChange={handlePriceChange} isPaidSelected={isPaidSelected} />
-        </div>
-    </div>
-
-    {/* Reset Button on the Right */}
-    <ResetButton onClick={handleReset} />
-</div>
-
-
+            <div className="flex items-center justify-between flex-wrap gap-4 bg-black rounded-xl p-2 mt-4">
+                <div className="flex items-center gap-4 flex-wrap">
+                    <h2 className="text-lg font-bold whitespace-nowrap">Pricing Options</h2>
+                    <div className="flex gap-4 flex-wrap text-xs sm:text-sm">
+                        {pricingOptions.map((option) => (
+                            <PricingOption
+                                key={option.id}
+                                option={option}
+                                isSelected={selectedOptions.includes(option.id)}
+                                onChange={handleOptionChange}
+                            />
+                        ))}
+                    </div>
+                    <div className="w-80 sm:w-40 md:w-64 lg:w-72"> 
+                        <PricingSlider  minPrice={minPrice}
+                            maxPrice={maxPrice} onPriceChange={handlePriceChange} isPaidSelected={isPaidSelected} />
+                    </div>
+                </div>
+                <ResetButton onClick={handleReset} />
+            </div>
             <div className="flex justify-between items-center mt-4">
                 <div></div>
                 <SortDropdown onSortChange={onSortChange} className="ml-auto" />

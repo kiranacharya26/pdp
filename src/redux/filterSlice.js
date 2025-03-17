@@ -21,7 +21,7 @@ const filterSlice = createSlice({
             state.selectedOptions = [];
             state.keyword = '';
             state.minPrice = 0;
-            state.maxPrice = 999;
+            state.maxPrice = 499;
         },
     },
 });

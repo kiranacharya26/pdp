@@ -5,12 +5,11 @@ import store from './redux/store';
 
 const App = () => {
     return (
-        <div className="App p-12 lg:p-12 md:p-8 sm:p-4">
-            <Provider store={store}>
-        <HomePage />
-    </Provider>
-        </div>
+      <div className="App p-4 sm:p-4 md:p-8 lg:p-12 bg-ashblack text-ashwhite">
+        <Provider store={store}>
+          <HomePage/>
+        </Provider>
+      </div>
     );
 };
-
 export default App;

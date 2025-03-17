@@ -14,14 +14,18 @@ const HomePage = () => {
     const dispatch = useDispatch();
     const { contentList, filteredContent, sortCriteria } = useSelector(state => state.content);
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
+        setLoading(true); // Start loading
         fetch('https://closet-recruiting-api.azurewebsites.net/api/data')
             .then(response => response.json())
             .then(data => {
                 dispatch(setContent(data));
                 dispatch(setFilteredContent(data));
-            });
+                setLoading(false); // Stop loading after data is fetched
+            })
+            .catch(() => setLoading(false)); // Stop loading even if there's an error
     }, [dispatch]);
 
     const handleFilterChange = (selectedOptions, keyword, minPrice, maxPrice) => {
@@ -41,7 +45,7 @@ const HomePage = () => {
         }
 
         dispatch(setFilteredContent(filtered));
-        setPage(1); // Reset pagination when filters change
+        setPage(1);
     };
 
     const handleSortChange = (criteria) => {
@@ -56,7 +60,7 @@ const HomePage = () => {
             sortedContent.sort((a, b) => a.title.localeCompare(b.title));
         }
         dispatch(setFilteredContent(sortedContent));
-        setPage(1); // Reset pagination when sorting changes
+        setPage(1);
     };
 
     const loadMoreItems = useCallback(() => {
@@ -65,35 +69,44 @@ const HomePage = () => {
 
     useInfiniteScroll(loadMoreItems);
 
-    const itemsToDisplay = filteredContent.slice(0, page * 20); // Show paginated items
+    const itemsToDisplay = filteredContent.slice(0, page * 20);
 
     return (
-        <div>
+        <div className="container mx-auto">
             <Filter onFilterChange={handleFilterChange} onSortChange={handleSortChange} />
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
-                {itemsToDisplay.map(content => (
-                    <div key={content.id} className="border rounded">
-                        <img
-                            src={content.imagePath}
-                            alt={content.title}
-                            className="w-full h-64 sm:h-72 lg:h-80 xl:h-96 object-cover mb-2"
-                            onError={(e) => e.target.src = 'https://via.placeholder.com/150'}
-                        />
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-4">
-                            <div className="flex flex-col">
-                                <h3 className="text-md font-bold">{content.title}</h3>
-                                <p className="text-sm text-gray-600">{content.creator}</p>
+
+            {loading ? ( 
+                <p className="text-center text-white text-lg font-semibold my-8">Loading products...</p>
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 p-2 sm:p-4 md:p-6">
+                    {itemsToDisplay.map(content => (
+                        <div key={content.id} className="rounded-xl shadow-lg bg-gray-900 text-white flex flex-col min-h-[450px] overflow-hidden">
+                            <div className="flex-grow flex">
+                                <img
+                                    src={content.imagePath}
+                                    alt={content.title}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => e.target.src = 'https://via.placeholder.com/150'}
+                                />
                             </div>
-                            <div className="flex flex-col sm:items-end">
-                                <p className="text-sm text-gray-600">{pricingOptionsMap[content.pricingOption]}</p>
-                                {content.pricingOption === 1 && <p className="text-sm text-gray-600">${content.price || 'N/A'}</p>}
-                                {content.pricingOption === 0 && <p className="text-sm text-gray-600">Free</p>}
-                                {content.pricingOption === 2 && <p className="text-sm text-gray-600">View Only</p>}
+                            <div className="p-4">
+                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                                    <div className="flex flex-col">
+                                        <h3 className="text-lg font-bold">{content.title}</h3>
+                                        <p className="text-sm">{content.creator}</p>
+                                    </div>
+                                    <div className="flex flex-col sm:items-end">
+                                        <p className="text-sm">{pricingOptionsMap[content.pricingOption]}</p>
+                                        {content.pricingOption === 1 && <p className="text-sm">${content.price || 'N/A'}</p>}
+                                        {content.pricingOption === 0 && <p className="text-sm">Free</p>}
+                                        {content.pricingOption === 2 && <p className="text-sm">View Only</p>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

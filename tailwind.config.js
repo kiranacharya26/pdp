@@ -4,7 +4,14 @@ module.exports = {
     "./public/index.html"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        ashblack: "#2C2C2C",
+      },
+      textColor: {
+        ashwhite: "#FFFFFF",
+      },
+    },
   },
   plugins: [],
 }
