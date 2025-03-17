@@ -2,12 +2,12 @@
 
 This project is a React application that implements a content filter with pricing options using Tailwind CSS for styling. It allows users to filter content based on selected pricing options and reset their selections.
 
-## Features
-
 - Content filtering based on pricing options (Paid, Free, View Only)
 - Reset button to clear selected filters
 - Data fetching from a specified API
 - Responsive design using Tailwind CSS
+- Redux used for state mangement.
+- useCallback for memoisation.
 
 ## Project Structure
 
