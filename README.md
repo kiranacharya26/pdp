@@ -11,28 +11,6 @@ This project is a React application that implements a content filter with pricin
 
 ## Project Structure
 
-```
-my-react-app
-├── public
-│   ├── index.html
-│   └── favicon.ico
-├── src
-│   ├── components
-│   │   ├── Filter.js
-│   │   ├── PricingOption.js
-│   │   └── ResetButton.js
-│   ├── pages
-│   │   └── HomePage.js
-│   ├── App.js
-│   ├── index.js
-│   └── styles
-│       └── tailwind.css
-├── package.json
-├── tailwind.config.js
-├── postcss.config.js
-└── README.md
-```
-
 ## Installation
 
 1. Clone the repository:
