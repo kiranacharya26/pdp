@@ -1,4 +1,4 @@
-# My React App
+# Product Page
 
 This project is a React application that implements a content filter with pricing options using Tailwind CSS for styling. It allows users to filter content based on selected pricing options and reset their selections.
 
